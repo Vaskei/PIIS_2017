@@ -1,0 +1,11 @@
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\bin\Debug\netcoreapp1.1\SEUS.deps.json
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\bin\Debug\netcoreapp1.1\SEUS.runtimeconfig.json
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\bin\Debug\netcoreapp1.1\SEUS.runtimeconfig.dev.json
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\bin\Debug\netcoreapp1.1\SEUS.dll
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\bin\Debug\netcoreapp1.1\SEUS.pdb
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.csprojResolveAssemblyReference.cache
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.csproj.CoreCompileInputs.cache
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.AssemblyInfoInputs.cache
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.AssemblyInfo.cs
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.dll
+D:\VisualStudioProjects\Repos2\e-indeks-v0.2\obj\Debug\netcoreapp1.1\SEUS.pdb

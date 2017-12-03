@@ -1,0 +1,111 @@
+﻿@model e_Index.Misc.StudentInfo
+
+@{
+    ViewBag.Title = "Studomat";
+
+    int ects = 0;
+    int etcs_po_semestru = 0;
+}
+
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Ocjene", "PregledOcjena", FormMethod.Get))
+{
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-default">Prikaži</button>
+    </p>
+}
+
+
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Greška!</strong> @ViewBag.Error
+    </div>
+}
+
+@if (Model != null)
+{
+    <h4>@Model.Naziv</h4>
+    foreach (var studij in Model.Studiji)
+    {
+        <button class="accordion">Studij: @studij.Naziv     ECTS: @studij.ECTS_Osvojeno / @studij.ECTS_Ukupno</button>
+        <div class="panel">
+
+            @foreach (var semestar in studij.Semestri)
+            {
+                etcs_po_semestru = 0;
+                <button class="accordion">@semestar.Oznaka . semestar</button>
+                <div class="panel">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>
+                                Kolegij
+                            </th>
+                            <th>
+                                Predavač
+                            </th>
+                            <th>
+                                ECTS
+                            </th>
+                            <th>
+                                Položeno
+                            </th>
+                            <th>
+                                Ocjena
+                            </th>
+                        </tr>
+                        @{ects = 0;}
+
+                        @foreach (var kol in semestar.Kolegiji)
+                        {
+                            <tr>
+                                <td>
+                                    @kol.Naziv
+                                </td>
+                                <td>
+                                    @kol.Profesor
+                                </td>
+                                <td>
+                                    @kol.ECTS
+                                </td>
+                                <td>
+                                    @if (kol.Polozen)
+                                    {
+                                        @: DA
+                                    }
+                                </td>
+                                <td>
+                                    @kol.Ocjena
+                                </td>
+                            </tr>
+                            @if (kol.Polozen)
+                            {
+                                ects = ects + kol.ECTS;
+                            }
+                            etcs_po_semestru = etcs_po_semestru + @kol.ECTS;
+                        }
+
+                        <tr>
+                            <td colspan="2"><b>UKUPNO ECTS</b></td>
+                            <td><b> @ects / @etcs_po_semestru</b></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                            }
+        </div>
+                                }
+                            }
+
+<!--Accordion-->
+<script src="~/Accordion/accordion.js"></script>
+<!--Accordion-->
