@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model SEUS.Modelss.SkolarineInfo
+
+@{
+    ViewBag.Title = "Evidentirane školarine";
+}
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+<br />
+<h4 class="text-heading">Unesite JMBAG studenta izvanrednog studija</h4>
+<br>
+
+@using (Html.BeginForm("Evidencija", "Skolarine", FormMethod.Get))
+{
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-info btn-sm"> Unesi</button>
+    </p>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Greška kod unosa JMBAG-a<br />ili je unesen JMBAG redovnog studenta!<br /></strong>
+    </div>
+}
+
+<hr />
+
+@if (Model != null)
+{
+    <h4 class="text-center" style="color:darkblue">@Model.Naziv</h4>
+    <hr />
+    <h4 class="text-left" style="color:midnightblue">Ime studenta: @Model.Ime  @Model.Prezime</h4>
+    <hr />
+    <div id="accordion">
+        <div class="bg-success panel-heading"><h4 class=" text-center">Evidentirane školarine</h4></div>
+        <div class="">
+            <table class="table table-hover table-striped table-bordered ">
+                <tr class="text-center">
+                    <th class="bg-info text-center">Nastavna godina </th>
+                    <th class="bg-info text-center">Akademska godina</th>
+                    <th class="bg-info text-center">Šifra upisa godine</th>
+                    <th class="bg-info text-center">Paralelni studij</th>
+                    <th class="bg-info text-center">Ukupni saldo</th>
+                </tr>
+
+                @foreach (var _evid in Model.SkolarinaList)
+                {
+                    <tr class="text-center">
+                        <td class="bg-warning ">@_evid.nastavnaGodina</td>
+                        <td class="bg-warning ">@_evid.akademskaGodina</td>
+                        <td class="bg-warning ">@_evid.sifraUpisaGodine</td>
+                        <td class="bg-warning ">@_evid.paralelniStudij</td>
+                        <td class="bg-warning ">@_evid.ukupniSaldo kn</td>
+                    </tr>
+                } <!--end foreach-->
+            </table>
+        </div>
+    </div>
+}
+
+<br />
+
+@if (Model != null)
+{ 
+<div class="accordion">    
+        <div class="bg-success panel-heading"><h4 class=" text-center">Evidentirane transakcije</h4></div>
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th class="bg-info text-center">Šifra transakcije</th>
+                <th class="bg-info text-center">Redni broj</th>
+                <th class="bg-info text-center">Datum</th>
+                <th class="bg-info text-center">Vrsta transakcije</th>
+                <th class="bg-info text-center">Iznos dugovanja</th>
+                <th class="bg-info text-center">Iznos potraživanja</th>
+                <th class="bg-info text-center">Knjiženo</th>
+            </tr>
+
+            @foreach (var _transakcija in Model.TransakcijeList)
+            {
+                <tr class="text-center">
+                    <td class="bg-warning"> @_transakcija.sifra</td>
+                    <td class="bg-warning">@_transakcija.redniBroj</td>
+                    <td class="bg-warning">@_transakcija.datumTransakcije</td>
+                    <td class="bg-warning">@_transakcija.vrstaTransakcije</td>
+                    <td class="bg-warning">@_transakcija.iznosDugovanja kn</td>
+                    <td class="bg-warning">@_transakcija.iznosPotrazivanja kn</td>
+                    <td class="bg-warning">@_transakcija.knjizeno</td>
+                </tr>
+            }
+            <!--end foreach-->
+        </table>  
+</div>
+}
+
+<!--Accordion-->
+<script src="~/Accordion/accordion.js"></script>
+<script>
+    $("#accordion").accordion({
+        active: 2,
+        classes: {
+            "ui-accordion": "highlight"
+        }
+    });
+</script>
+<!--Accordion-->

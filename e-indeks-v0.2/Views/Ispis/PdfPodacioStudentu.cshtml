@@ -1,0 +1,106 @@
+@{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model SEUS.EXCELKlase.StudentPodaci
+
+
+@{
+    ViewBag.Title = "Podaci o studentu!";
+}
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+
+<h4>Unesi svoj jedinstveni maticni broj akademskog gradanina</h4>
+
+@using (Html.BeginForm("PdfPodaci", "Ispis", FormMethod.Get))
+{
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-default">Unesite jmbag</button>
+    </p>
+}
+
+<hr />
+
+@if (ViewBag.Error != null)
+{
+
+    <div class="alert alert-danger">
+        <strong>Greska kod trazenja JMBAG-a!</strong> @ViewBag.Error
+    </div>
+}
+
+@if (ViewBag.Error == null && Model != null)
+{
+
+
+
+
+    <div id="element-to-print">
+        <table border="1" width="400">
+            <thead>PODACI o @Model.ime @Model.prezime</thead>
+            <tr>
+                <td>Ime: </td>
+                <td>@Model.ime</td>
+            </tr>
+            <tr>
+                <td>Prezime: </td>
+                <td>@Model.prezime</td>
+            </tr>
+            <tr>
+                <td>e-mail: </td>
+                <td>@Model.email</td>
+            </tr>
+            <tr>
+                <td>Jmbag: </td>
+                <td>@Model.jmbag</td>
+            </tr>
+            <tr>
+                <td>Jmbg: </td>
+                <td>@Model.jmbg</td>
+            </tr>
+            <tr>
+                <td>OIB: </td>
+                <td>@Model.oib</td>
+            </tr>
+            <tr>
+                <td>Datum rodenja: </td>
+                <td>@Model.datumrodenja</td>
+            </tr>
+            <tr>
+                <td>Spol: </td>
+                <td>@Model.spol</td>
+            </tr>
+            <tr>
+                <td>Godina zavrsetka skole: </td>
+                <td>@Model.godinazavrsetkaskole</td>
+            </tr>
+            <tr>
+                <td>Ime majke: </td>
+                <td>@Model.imemajke</td>
+            </tr>
+            <tr>
+                <td>Ime oca: </td>
+                <td>@Model.imeoca</td>
+            </tr>
+        </table>
+    </div>
+    @*ovaj gumb sluzi za direktno skidanje na korisnikovo racunalo*@
+    <br /> <br />
+    <!--<button type="button" class="btn btn-success disabled">Podaci o @Model.ime @Model.prezime su uspjesno skinuti!</button> -->
+           <a class="btn btn-success" onclick="window.open('mailto:test@example.com');">  Posaljite na e-mail  </a>
+}
+
+
+<!--Accordion-->
+<script src="~/Accordion/dep/html2pdf.bundle.min.js"></script>
+<script src="~/Accordion/accordion.js"></script>
+<script src="~/Accordion/pdf.js"></script>
+<!--Accordion-->

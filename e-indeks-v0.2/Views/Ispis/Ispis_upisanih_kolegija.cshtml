@@ -1,0 +1,22 @@
+
+@{
+    ViewData["Title"] = "Ispis_upisanih_kolegija";
+}
+@*ovdje cemo napraviti potreban view za upisane kolegije*@
+
+<h1>Ispis upisanih kolegija</h1>
+
+<h4>Molim vas odaberite jedan od ispisa:</h4>
+<br />
+<br />
+
+<div>
+    <a class="btn btn-primary btn-lg" href="@Url.Action("WordUpisani","Ispis")">  WORD (.docx)  </a>
+
+    <a class="btn btn-success btn-lg" href="@Url.Action("ExcelUpisani","Ispis")">  EXCEL (.xlsx)  </a>
+
+    <a class="btn btn-danger btn-lg" href="@Url.Action("PdfUpisani","Ispis")">  PDF (.pdf)  </a>
+
+
+
+</div>

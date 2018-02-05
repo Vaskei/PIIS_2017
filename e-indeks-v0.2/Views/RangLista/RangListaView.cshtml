@@ -1,0 +1,132 @@
+﻿@model e_Index.Misc.StudentInfo
+
+@{
+    ViewBag.Title = "Prijava za rang listu studenata";
+
+    int ects = 0;
+    int etcs_po_semestru = 0;
+}
+
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+<style>
+    .button {
+        background-color: #008CBA;
+        border: none;
+        color: white;
+        padding: 12px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: #008CBA;
+        border: none;
+        color: white;
+        padding: 9px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    #container {
+        text-align: center;
+    }
+
+    #left {
+        float: left;
+    }
+
+    #right {
+        float: right;
+    }
+
+    #center {
+        margin: 0 auto;
+    }
+</style>
+
+<div id="container">
+    <div id="left">
+        <p style="font-family:Verdana;">
+            <h6>Rang lista se kreira prema<br/>težinskom prosjeku studenta</h6>
+            <a><img src='../images/list.png' width='300' class='img-rounded'></a>
+        </p>
+    </div>
+    <div id="right">
+        <p>
+            <h6> Težinski prosjek je prosjek u kojem ocjena<br /> iz pojedinog predmeta sudjeluje u ukupnom prosjeku</h6>
+            <a><img src='../images/listpp.png' width='300' class='img-rounded'></a>
+        </p>
+    </div>
+    <div id="center">
+        <h4>@ViewBag.Title</h4>
+
+
+
+        @using (Html.BeginForm("RangListaView", "RangLista", FormMethod.Get))
+        {
+            <p>
+                <h6>Da biste se prijavili na rang listu upišite svoj JMBAG te pritisnite gumb "Prijava"</h6>
+
+                JMBAG: @Html.TextBox("jmbag")
+                <button type="submit" class="button1">Prijava</button>
+            </p>
+        }
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Greška!</strong> @ViewBag.Error
+
+            </div>
+        }
+
+
+
+
+
+        @if (Model != null)
+        {
+
+            <div class="container" style="width:50%;margin-top:2%">
+
+
+                <h6>Uspješno ste se prijavili sa sljedećim podacima:</h6>
+                <ul class="list-group">
+                    <li class="list-group-item">Informacije o prijavi</li>
+                    <li class="list-group-item">Ime i prezime studenta:<b> @Model.Naziv </b></li>
+                    <li class="list-group-item">ECTS:<b> @Model.ECTSOsvojeno / @Model.ectsUkupno </b></li>
+                    <li class="list-group-item">Težinski prosjek:<b> @Model.TePr </b></li>
+                    <li class="list-group-item">Godina studija:<b> @Model.godina </b></li>
+                </ul>
+
+                <p>
+                    <button class="button" onclick="poziviliste();">Lista studenata</button> Pritisnite za prikaz rang liste svih prijavljenih studenata
+                </p>
+            </div>
+
+
+            <script>
+
+                function poziviliste() {
+                    window.open("../RangLista/StudentList", "");
+                }
+
+            </script>
+        }
+
+    </div>
+
+    <!--Accordion-->
+    <script src="~/Accordion/accordion.js"></script>
+    <!--Accordion-->

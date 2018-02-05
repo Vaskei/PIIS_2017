@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model SEUS.Modelss.StudentiInfo
+
+@{
+    ViewBag.Title = "Upisani Studenti";
+
+    int ukupno = 1;
+}
+
+@*jQueryBootgrid*@
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/lib/bootgrid/css/jquery.bootgrid.css" rel="stylesheet" />
+<!--jQueryBootgrid-->
+
+
+<h4 class="text-right">Međimursko veleučilište u Čakovcu</h4>
+<h4>Lista upisanih studenta</h4>
+
+@using (Html.BeginForm("Upisani", "UpisaniStudenti", FormMethod.Get))
+{
+<form class="form-inline">
+    <div class="form-group">
+        <label for="selectElementId" class="control-label"> Odaberite godinu</label>
+        <select name="godina" id="selectElementId" class="form-control" title=""></select>
+    </div>
+    <button type="submit" id="show-contact-modal-button" class="btn btn-primary"> Unesi</button>
+</form>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+       <strong>Greška kod unosa godine</strong> @ViewBag.Error
+    </div>
+}
+
+@if (Model != null)
+{
+    <h4 class="text-center">Studenti upisani @Model.Godina godine</h4>
+    <div class="panel show">
+        <div class="col-md-12">
+            <table id="grid-data" class="table table-hover table-condensed table-striped">
+                <thead>
+                    <tr class="bg-info">
+                        <th data-column-id="id" data-identifier="true" data-type="numeric"> Rb</th>
+                        <th data-column-id="ime">Ime</th>
+                        <th data-column-id="prezime">Prezime</th>
+                        <th data-column-id="jmbag">JMBAG</th>                        
+                        <th data-column-id="link" data-formatter="link" data-sortable="false">Detalji o studentu</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var _studenti in Model.StudentiList)
+                    {
+                        <tr>
+                            <td> @ukupno </td>
+                            <td> @_studenti.Ime</td>
+                            <td> @_studenti.Prezime </td>
+                            <td> @_studenti.Jmbag</td>                                                 
+                        </tr>
+
+                        ukupno = ukupno + 1;
+                    } <!--end foreach-->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!--jQueryBootgrid-->
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootgrid/js/jquery.bootgrid.js"></script>
+<script src="~/lib/bootgrid/js/jquery.bootgrid.fa.js"></script>
+<script>  
+        //jQueryBootgrid
+        $("#grid-data").bootgrid({
+            formatters: {
+                "link": function (column, row) {
+                    return '<a class="btn btn-info btn-xs" href="../StudentPodaci/Podaci?jmbag='+ row.jmbag + '">' + "Detalji" + '</a>';
+                }
+            },
+            caseSensitive: false,
+            rowCount: 25,
+            columnSelection: false,
+            labels: {
+                noResults: "Nema podataka!",
+                infos: "Prikazano od {{ctx.start}} do {{ctx.end}} od ukupno {{ctx.total}} unosa",
+            }     
+        });
+
+    //izbornik_godina
+    function izborGodine() {
+        var max = new Date().getFullYear(),
+            min = 2008,
+            select = document.getElementById('selectElementId');
+        for (var i = max; i >= min; i--) {
+            var opt = document.createElement('option');
+            opt.value = i;
+            opt.innerHTML = i;
+            select.appendChild(opt);
+        }
+    }
+    window.onload = izborGodine();
+
+</script>
+

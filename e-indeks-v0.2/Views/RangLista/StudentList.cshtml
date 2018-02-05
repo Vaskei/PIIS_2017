@@ -1,0 +1,146 @@
+﻿@model e_Index.Misc.StudentInfo
+    
+@{
+    ViewBag.Title = "Pregled prosjeka ocjena studenata";
+
+    int ects = 0;
+    int etcs_po_semestru = 0;
+    int redni = 1;
+    
+}
+
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4c66af;
+        color: white;
+    }
+    #myTable tr.header, #myTable tr:hover {
+        background-color: #f1f1f1;
+    }
+
+</style>
+
+<h4>Rang lista studenata kreirana prema težinskom prosjeku</h4>
+<p>
+    Tražilica: <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Upiši traženo ime" title="Type in a name">
+    Filter prema godini: <input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Upiši godinu studija" title="Type in a year">
+</p>
+    <table id="tab1" class="table table-hover">
+       
+            <tr class=" header">
+                <td>
+                    <b>Pozicija</b>
+                </td>
+                <td>
+                    <b>ID</b>
+                </td>
+                <td>
+                    <b>Ime i prezime</b>
+                </td>
+
+
+                <td>
+                    <b>ECTS bodovi</b>
+                </td>
+
+                <td>
+                    <b>Težinski prosjek</b>
+                </td>
+                <td>
+                    <b>Godina studija</b>
+                </td>
+            </tr>
+        
+
+        @foreach (var sviStudenti in Model.SviStudenti)
+        {
+
+            <tr class="header">
+                <td>
+                    @redni
+                </td>
+                <td>
+                    @sviStudenti.id
+                </td>
+                <td>
+                    @sviStudenti.Naziv
+                </td>
+
+                <td>
+                    @sviStudenti.ECTSOsvojenoB
+                </td>
+
+                <td>
+                    @sviStudenti.TePrB
+                </td>
+                <td>
+                    @sviStudenti.godina
+                </td>
+            </tr>
+
+            redni = redni + 1;
+
+        }
+
+    </table>
+                    
+
+        <script>
+            function myFunction() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("tab1");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[2];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+            function myFunction1() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInput1");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("tab1");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[5];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+</script>
+
+
+    <!--Accordion-->
+    <script src="~/Accordion/accordion.js"></script>
+    <!--Accordion-->

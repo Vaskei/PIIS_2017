@@ -1,0 +1,132 @@
+@model System.Collections.Generic.List<SEUS.Models.IzoPredmet>
+
+@{
+    ViewBag.Title = "Izostanci";
+}
+
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("ZaProfesore", "Izostanci", FormMethod.Get))
+{
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-default">Prikazi</button>
+    </p>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Gre�ka!</strong> @ViewBag.Error
+    </div>
+}
+
+@if (Model != null)
+{
+    @foreach (var kol in (dynamic)Model)
+    {
+        <button class="accordion"><b>Predmet:</b> @kol.imePredmeta</button>
+        <div class="panel">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Predavanja Vjezbe
+                    </th>
+                    <th>
+                        1. Tjedan
+                    </th>
+                    <th>
+                        2. Tjedan
+                    </th>
+                    <th>
+                        3. Tjedan
+                    </th>
+                    <th>
+                        4. Tjedan
+                    </th>
+                    <th>
+                        5. Tjedan
+                    </th>
+                    <th>
+                        6. Tjedan
+                    </th>
+                    <th>
+                        7. Tjedan
+                    </th>
+                    <th>
+                        8. Tjedan
+                    </th>
+                    <th>
+                        9. Tjedan
+                    </th>
+                    <th>
+                        10. Tjedan
+                    </th>
+                    <th>
+                        11. Tjedan
+                    </th>
+                    <th>
+                        12. Tjedan
+                    </th>
+                    <th>
+                        13. Tjedan
+                    </th>
+                    <th>
+                        14. Tjedan
+                    </th>
+                    <th>
+                        15. Tjedan
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Predavanja
+                    </td>
+                    <td>@ViewData["tjedan1"]</td>
+                    <td>@ViewData["tjedan2"]</td>
+                    <td>@ViewData["tjedan3"]</td>
+                    <td>@ViewData["tjedan4"]</td>
+                    <td>@ViewData["tjedan5"]</td>
+                    <td>@ViewData["tjedan6"]</td>
+                    <td>@ViewData["tjedan7"]</td>
+                    <td>@ViewData["tjedan8"]</td>
+                    <td>@ViewData["tjedan9"]</td>
+                    <td>@ViewData["tjedan10"]</td>
+                    <td>@ViewData["tjedan11"]</td>
+                    <td>@ViewData["tjedan12"]</td>
+                    <td>@ViewData["tjedan13"]</td>
+                    <td>@ViewData["tjedan14"]</td>
+                    <td>@ViewData["tjedan15"]</td>
+                </tr>
+                <tr>
+                    <td>
+                        Vjezbe
+                    </td>
+                    <td>@ViewData["ttjedan1"]</td>
+                    <td>@ViewData["ttjedan2"]</td>
+                    <td>@ViewData["ttjedan3"]</td>
+                    <td>@ViewData["ttjedan4"]</td>
+                    <td>@ViewData["ttjedan5"]</td>
+                    <td>@ViewData["ttjedan6"]</td>
+                    <td>@ViewData["ttjedan7"]</td>
+                    <td>@ViewData["ttjedan8"]</td>
+                    <td>@ViewData["ttjedan9"]</td>
+                    <td>@ViewData["ttjedan10"]</td>
+                    <td>@ViewData["ttjedan11"]</td>
+                    <td>@ViewData["ttjedan12"]</td>
+                    <td>@ViewData["ttjedan13"]</td>
+                    <td>@ViewData["ttjedan14"]</td>
+                    <td>@ViewData["ttjedan15"]</td>
+                </tr>
+            </table>
+        </div>
+    }
+
+}
+
+<!--Accordion-->
+<script src="~/Accordion/accordion.js"></script>
+<!--Accordion-->

@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Slanje_na mail";
+}
+
+@*
+    @using (Html.BeginForm("Slanje_na_mail", "Ispis"))
+    {
+*@
+<h2>Pošalji na mail</h2>
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <label>Prima:</label>
+        <div class="form-group">
+            <input name="name" type="text" class="form-group" />
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <label>Opis:</label>
+        <div class="form-group">
+            <input name="opis" type="text" class="form-group" />
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <label>Privitak</label>
+        <div class="form-group">
+            <input name="privitak" type="file" class="form-group" />
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Posalji</button>
+        </div>
+    </div>
+</div>
+@*}*@

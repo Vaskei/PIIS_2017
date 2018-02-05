@@ -1,0 +1,384 @@
+﻿@model e_Index.Misc.StudentInfo
+
+@{
+    ViewBag.Title = "Informacije";
+
+    int ects = 0;
+    int etcs_po_semestru = 0;
+}
+
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/Accordion2.css" />
+<!--Accordion-->
+<script>
+    function OtvoriSveIzbornike() {
+       
+        var acc2 = document.getElementsByClassName("panel");
+        for (var x = 0; x < acc2.length; x++) {
+            acc2[x].style.display = "block";
+        }
+
+       
+    }
+
+    function ZatvoriSveIzbornike() {
+        var acc = document.getElementsByClassName("panel");
+        for (var i = 0; 0 < acc.length; i++) {
+            acc[i].style.display = "none";
+        }
+
+    }
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            animated: 'fade',
+            placement: 'bottom',
+            html: true
+        });
+    });
+
+   
+</script>
+
+
+
+
+@using (Html.BeginForm("Info", "Informacije", FormMethod.Get))
+{
+    @if (!(ViewBag.Error == null && Model != null))
+    {
+        <h2>@ViewBag.Title</h2>
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-default">Prikazi</button>
+        @* Tooltip verzija slike iksice *@
+        <a data-toggle="tooltip" title="JMBAG -  jedinstveni matični broj akademskog građanina se dojdeljuje kao broj indetifikacije u svrhe lakše provjere i baratanja podacima studenta. Nalazi se na studentskoj iskaznizi - XICI">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </a>
+    </p>
+    
+    }
+}
+
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Greska kod upisa JMBAG-a!</strong>
+        <p>  @ViewBag.Error </p>
+    </div>
+
+}
+@*else if (ViewBag.Error == null && Model != null)
+{
+    <div class="alert alert-success">
+        <strong>Uspjesan upis JMBAG-a!</strong>
+    </div>
+
+}*@
+
+
+
+@if (ViewBag.Error == null && Model != null)
+{
+        @using (Html.BeginForm("Info", "Informacije", FormMethod.Get))
+        {
+            <h3>
+                @Model.Naziv
+               
+                <a href="#" class="btn btn-default" onclick="OtvoriSveIzbornike()">Otvori sve izbornike</a>
+                <a href="#" class="btn btn-default" onclick="ZatvoriSveIzbornike()">Zatvori sve izbornike</a>
+                <button type="submit" class="btn btn-default">Upis JMBAG-a</button>
+            </h3>
+        }
+
+    @*<button class="accordion">Odabir studija</button>
+    <div  class="panel">*@
+        @foreach (var studij in Model.Studiji)
+        {
+        <button class="accordion">Studij: @studij.Naziv</button>
+        <div  class="panel">
+
+            @*<button class="accordion">Odabir godine</button>
+            <div  class="panel">*@
+                
+                <button class="accordion">Prva godina</button>
+                <div   class="panel">
+                    @foreach (var semestar in studij.Semestri)
+                    {
+                        @if (semestar.Oznaka == 1 || semestar.Oznaka == 2)
+                        {
+
+                            etcs_po_semestru = 0;
+                            <button class="accordion">@semestar.Oznaka . semestar </button>
+                            <div   class="panel">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>
+                                            Kolegij
+                                        </th>
+                                        <th>
+                                            Predavač
+                                        </th>
+                                        
+                                    </tr>
+                                    @{ects = 0;}
+
+                                    @foreach (var kol in semestar.Kolegiji)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @*<a href="@kol.Naziv">@kol.Naziv</a>*@
+                                                <button class="accordion">@kol.Naziv </button>
+                                                <div class="panel">
+
+                                                    <table class="table table-hover">
+                                                        <tr>
+                                                            <td>
+                                                                Broj ECTS bodova
+                                                            </td>
+                                                            <td>
+                                                                @kol.ECTS
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Ocjena
+                                                            </td>
+                                                            <td>
+                                                                @kol.Ocjena
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Položeno
+                                                            </td>
+                                                            <td>
+                                                                @if (kol.Polozen)
+                                                                {
+                                                                    @: Da
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                
+                                                                @using (Html.BeginForm("kolegij", "Informacije", new { ime = kol.Naziv }, FormMethod.Post))
+                                                                {
+                                                                    <button type="submit" class="btn btn-block">Nastavni program</button>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @kol.Profesor
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                    }
+
+                                    
+                                </table>
+                            </div>
+                        }
+                    }
+
+
+                  
+
+                                    </div> @*prva god*@
+                <button class="accordion">Druga godina</button>  @*pocne tu*@
+                <div  class="panel">
+                    @foreach (var semestar in studij.Semestri)
+                    {
+                        @if (semestar.Oznaka == 3 || semestar.Oznaka == 4)
+                        {
+
+                            etcs_po_semestru = 0;
+                            <button class="accordion">@semestar.Oznaka . semestar </button>
+                            <div  class="panel">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>
+                                            Kolegij
+                                        </th>
+                                        <th>
+                                            Predavač
+                                        </th>
+                                        
+                                    </tr>
+                                    
+
+                                    @foreach (var kol in semestar.Kolegiji)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @*<a href="@kol.Naziv">@kol.Naziv</a>*@
+                                                <button class="accordion">@kol.Naziv </button>
+                                                <div class="panel">
+
+                                                    <table class="table table-hover">
+                                                        <tr>
+                                                            <td>
+                                                                Broj ECTS bodova
+                                                            </td>
+                                                            <td>
+                                                                @kol.ECTS
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Ocjena
+                                                            </td>
+                                                            <td>
+                                                                @kol.Ocjena
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Položeno
+                                                            </td>
+                                                            <td>
+                                                                @if (kol.Polozen)
+                                                                {
+                                                                   @: Da
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+
+                                                                @using (Html.BeginForm("kolegij", "Informacije", new { ime = kol.Naziv }, FormMethod.Post))
+                                                                {
+                                                                    <button type="submit" class="btn btn-block">Nastavni program</button>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                   
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @kol.Profesor
+                                            </td>
+                                            
+                                      
+                                        </tr>
+                                        
+                                    }
+
+                                    
+                                </table>
+                            </div>
+                        }
+                    }
+
+                   
+
+                                    </div>    
+
+                <button class="accordion">Treca godina</button>
+                <div  class="panel">
+                    @foreach (var semestar in studij.Semestri)
+                    {
+                        @if (semestar.Oznaka == 5 || semestar.Oznaka == 6)
+                        {
+
+                            etcs_po_semestru = 0;
+                            <button class="accordion">@semestar.Oznaka . semestar </button>
+                            <div  class="panel">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>
+                                            Kolegij
+                                        </th>
+                                        <th>
+                                            Predavač
+                                        </th>
+                                        
+                                    </tr>
+                                   
+
+                                    @foreach (var kol in semestar.Kolegiji)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @*<a href="@kol.Naziv">@kol.Naziv</a>*@
+                                                <button class="accordion">@kol.Naziv </button>
+                                                <div class="panel">
+                                                    
+                                                    <table class="table table-hover">
+                                                        <tr>
+                                                            <td>
+                                                                Broj ECTS bodova
+                                                            </td>
+                                                            <td>
+                                                                @kol.ECTS
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Ocjena
+                                                            </td>
+                                                            <td>
+                                                                @kol.Ocjena
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Položeno
+                                                            </td>
+                                                            <td>
+                                                                @if (kol.Polozen)
+                                                                {
+                                                                    @: Da
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+
+                                                                @using (Html.BeginForm("kolegij", "Informacije", new { ime = kol.Naziv }, FormMethod.Post))
+                                                                {
+                                                                    <button type="submit" class="btn btn-block">Nastavni program</button>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @kol.Profesor
+                                            </td>
+                                            
+                                        </tr>
+
+
+                                    }
+                                </table>
+                            </div>
+                        }
+                    }
+
+
+                                    </div>
+                    
+                </div>  @* odabir godine div*@
+
+
+
+          @*</div>*@
+        }
+  @*</div>*@
+}
+<!--Accordion-->
+<script src="~/Accordion/Accordion2.js"></script>
+<!--Accordion-->

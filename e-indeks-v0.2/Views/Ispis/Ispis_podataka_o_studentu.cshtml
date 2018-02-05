@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Ispis_podataka_o_studentu";
+}
+@*ovdje cemo napraviti potreban view za informacije o studentu.*@
+
+<h1>Ispis Podataka o studentu</h1>
+
+<h4>Molim vas odaberite jedan od ispisa:</h4>
+<br />
+<br />
+
+<div>
+    <a class="btn btn-primary btn-lg" href="@Url.Action("WordPodaci","Ispis")">  WORD (.docx)  </a>
+
+    <a class="btn btn-success btn-lg" href="@Url.Action("ExcelPodaci","Ispis")">  EXCEL (.xlsx)  </a>
+
+    <a class="btn btn-danger btn-lg" href="@Url.Action("PdfPodaci","Ispis")">  PDF (.pdf)  </a>
+
+
+
+</div>

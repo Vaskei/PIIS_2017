@@ -1,0 +1,22 @@
+
+@{
+    ViewData["Title"] = "Ispis_nepolozenih_kolegija";
+}
+@*ovdje cemo napraviti potreban view za nepolozene kolegije*@
+
+<h1>Ispis nepolozenih kolegija</h1>
+
+<h4>Molim vas odaberite jedan od ispisa:</h4>
+<br />
+<br />
+
+<div>
+    <a class="btn btn-primary btn-lg" href="@Url.Action("WordNepolozeni","Ispis")">  WORD (.docx)  </a>
+
+    <a class="btn btn-success btn-lg" href="@Url.Action("ExcelNepolozeni","Ispis")">  EXCEL (.xlsx)  </a>
+
+    <a class="btn btn-danger btn-lg" href="@Url.Action("PdfNepolozeni","Ispis")">  PDF (.pdf)  </a>
+
+
+
+</div>

@@ -4,23 +4,124 @@
 
 @model SEUS.Podatkomat.Student
 
+
 @{
-    ViewBag.Title = "Moji podaci";
+    ViewBag.Title = "Podaci o studentu";
 }
 
 <!--Accordion-->
 <link rel="stylesheet" href="~/Accordion/accordion.css" />
 <!--Accordion-->
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+    .tooltip-inner {
+        max-width: 350px;
+    }
+</style>
+
+<br />
 <h4>Unesi svoj jedinstveni matični broj akademskog građanina</h4>
 
 @using (Html.BeginForm("Podaci", "StudentPodaci", FormMethod.Get))
 {
     <p>
-        JMBAG: @Html.TextBox("jmbag")
-        <button type="submit" class="btn btn-default">Unesi</button>
+        @*@if (Model == null)
+        {
+            <img src="~/images/XICA.jpg" />
+        }*@
+
+        <b>JMBAG:</b> @Html.TextBox("jmbag", null, new { id = "jmbagId", oninput = "jmbagProvjera()" })
+        <button type="submit" id="gumbic" class="btn btn-default">Unesi</button>
+
+        @* Tooltip verzija slike iksice *@
+        <a data-toggle="tooltip" title="<img src='../images/XICA.jpg' width='300' class='img-rounded'>">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </a>
+
+        @* Popup verzija (modal) slike iksice *@
+        @*<a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-question-sign"></span></a>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <b>Unesite JMBAG broj označen na slici.</b>
+                    </div>
+                    <div class="modal-body">
+                        <img class="img-responsive" src="~/images/XICA.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
     </p>
 }
+
+<script>
+    function OtvoriSve() {
+        document.getElementById("KontrolaOtvaranja1").classList.add('show');
+        document.getElementById("KontrolaOtvaranja2").classList.add('show');
+        document.getElementById("KontrolaOtvaranja3").classList.add('show');
+        document.getElementById("KontrolaOtvaranja4").classList.add('show');
+        document.getElementById("KontrolaOtvaranja5").classList.add('show');
+        document.getElementById("KontrolaOtvaranja6").classList.add('show');
+        document.getElementById("KontrolaOtvaranja7").classList.add('show');
+
+        document.getElementById("KontrolaOtvaranjaAcc1").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc2").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc3").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc4").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc5").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc6").classList.add('active');
+        document.getElementById("KontrolaOtvaranjaAcc7").classList.add('active');
+    }
+    function ZatvoriSve() {
+        document.getElementById("KontrolaOtvaranja1").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja2").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja3").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja4").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja5").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja6").classList.remove('show');
+        document.getElementById("KontrolaOtvaranja7").classList.remove('show');
+
+        document.getElementById("KontrolaOtvaranjaAcc1").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc2").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc3").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc4").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc5").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc6").classList.remove('active');
+        document.getElementById("KontrolaOtvaranjaAcc7").classList.remove('active');
+    }
+
+    //aktivacija-deaktivacija gumba Unesi kod unosa JMBAG
+    var jmbagUnos;
+    var gumbich = document.getElementById("gumbic");
+    var uzorak = /^[0-9]{10}$/;
+    function jmbagProvjera() {        
+        var jmbagUnos = document.getElementById("jmbagId").value;
+        if (uzorak.test(jmbagUnos)) {
+            gumbich.disabled = false;
+        }
+        else {
+            gumbich.disabled = true;
+        }
+    }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            animated: 'fade',
+            placement: 'bottom',
+            html: true
+        });
+    });
+    window.onload = jmbagProvjera();
+
+
+</script>
+
+
 
 <hr />
 
@@ -30,37 +131,166 @@
         <strong>Greška kod traženja JMBAG-a!</strong> @ViewBag.Error
     </div>
 }
+    @*dsgf*@
+    @if (ViewBag.Error == null && Model != null)
+    {
+        @*<h2>@Model.ime @Model.prezime</h2>
+            <img src="data:image/jpeg;base64, @Model.slikaBase64" alt="faca" class="img-thumbnail" />
+            <button class="accordion">Base64String reprezentacija slike</button>
+            <div class="panel">
+                <pre>@Model.slikaBase64</pre>
+            </div>
+            <br />*@
+        <div class="jumbotron" style="padding:20px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="media">
+                            <div class="media-left" style="padding-right:20px">
+                                @if (Model.slikaBase64 != null)
+                                {
+                                    <img src="data:image/jpeg;base64, @Model.slikaBase64" width="250" height="250" alt="faca" class="img-rounded media-object" />
+                                }
+                                else
+                                {
+                                    <img src="../images/slikaPlaceholder.png" width="250" height="250" alt="nemaFace" class="img-rounded media-object" />
+                                }
+                            </div>
 
-@if (Model != null)
-{
-    <h4>@Model.ime @Model.prezime</h4>
-    <button class="accordion">Accordion izbornik za dodatne podatke...<!-- Osobni podaci --></button>
-    <div class="panel">
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-    </div>
+                            <div class="media-body">
+                                <h2 class="media-heading">@Model.ime @Model.prezime</h2>
+                                <h4>@Model.nazivStudija</h4>
+                                <h4>@Model.nazivPodrucja</h4>
+                                <h5>JMBAG: @Model.jmbag</h5>
+                                <div style="position:absolute; bottom:0">
+                                    <a href="#" class="btn btn-success" onclick="OtvoriSve()">Otvori sva polja</a>
+                                    <a href="#" class="btn btn-danger" onclick="ZatvoriSve()">Zatvori sva polja</a>
+                                </div>
+                            </div>
+  
+                        </div>
+                    </div>
 
-    <button class="accordion">Accordion izbornik za dodatne podatke...</button>
-    <div class="panel">
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-    </div>
+                </div>
 
-    <button class="accordion">Accordion izbornik za dodatne podatke...</button>
-    <div class="panel">
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-    </div>
-
-}
+            </div>
+        </div>
 
 
+        <button id="KontrolaOtvaranjaAcc1" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Osobni podaci</button>
+        <div id="KontrolaOtvaranja1" class="panel show">
+            <br />
+            <p><strong>JMBAG:</strong> @Model.jmbag</p>
+            <p><strong>Naziv studija:</strong> @Model.nazivStudija</p>
+            <p><strong>Naziv područja:</strong> @Model.nazivPodrucja</p>
+            @*<pre>@Model.studentJSON</pre>*@
+            <p><strong>Datum upisa:</strong> @Model.datumUpisaStudija</p>
+            <p><strong>JMBG:</strong> @Model.jmbg</p>
+            <p><strong>OIB:</strong> @Model.oib</p>
+            <p><strong>Datum rođenja:</strong> @Model.datumRodenja</p>
+            <p><strong>Prebivalište:</strong> @Model.adresaStudenta, @Model.mjesto, @Model.drzava</p>
+            <p><strong>Poštanski broj: </strong>@Model.postanskiBrStudenta</p>
+            <p><strong>Završena srednja škola:</strong> @Model.srednjaSkola, @Model.godinaZavrsetkaSrednje.</p>
+            <br />
+            @*<p>SAMO ZA TESTNE POTREBE:</p>
+                <p>Prvi URL (Podaci o studentu): @Model.podaciURL</p>
+                <p>Drugi URL (Podaci o studiju): @Model.studijURL</p>
+                <p>Treci URL (Privatni podaci - mjesto, status, roditelji...): @Model.privatnoURL</p>
+                <p>Godina upisa: @Model.godinaUpisa</p>*@
+        </div>
+
+
+        <button id="KontrolaOtvaranjaAcc2" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Podaci o uzdržavatelju</button>
+        <div id="KontrolaOtvaranja2" class="panel show">
+            <br />
+            <p><strong>Uzdržavatelj studenta: </strong>@Model.uzdrzavatelj</p>
+        </div>
+
+        <button id="KontrolaOtvaranjaAcc3" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Podaci o roditeljima</button>
+        <div id="KontrolaOtvaranja3" class="panel show">
+            <br />
+            <p><strong>Majka: </strong> @Model.imeMajke</p>
+            <p><strong>Otac: </strong> @Model.imeOca</p>
+            @foreach (var item in Model.Roditelji)
+            {
+                <div style="float:left; padding: 15px">
+                    <h5><u><strong> @item.otacILImajka.ToUpper()    </strong></u></h5>
+                    <p><strong>Zanimanje: </strong> @item.zanimanje</p>
+                    <p><strong>Položaj na poslu: </strong> @item.polozajUZanimanju</p>
+                    <p><strong>Stručna sprema: </strong> @item.strucnaSprema</p>
+                    <p><strong>Postignuto obrazovanje: </strong> @item.postignutoObrazovanje</p>
+                    <br />
+                </div>
+            }
+            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </div>
+
+        <button id="KontrolaOtvaranjaAcc4" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Pregled podataka o trenutnom obrazovanju</button>
+        <div id="KontrolaOtvaranja4" class="panel show">
+            <br />
+            <p><strong>Ustanova na kojoj student studira: </strong>@Model.nazivUstanove</p>
+            <p><strong>Šifra ustanove: </strong>@Model.sifraUstanove</p>
+            <p><strong>Datum upisa: </strong>@Model.datumUpisaStudija</p>
+            <p><strong>Email studenta: </strong>@Model.emailStudenta</p>
+            <p><strong>Email aktivan: </strong>@Model.emailAktivan</p>
+        </div>
+
+        <button id="KontrolaOtvaranjaAcc5" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Pregled podataka o završenom obrazovanju</button>
+        <div id="KontrolaOtvaranja5" class="panel show">
+            <br />
+            <p><strong>Naziv završene škole: </strong>@Model.srednjaSkola</p>
+            <p><strong>Godina završetka škole: </strong>@Model.godinaZavrsetkaSrednje</p>
+            <p><strong>Strukovno područje: </strong>@Model.strukovnoPodrucjeSrednje</p>
+            <p><strong>Smjer: </strong>@Model.smjerSrednjeSkole</p>
+        </div>
+
+        <button id="KontrolaOtvaranjaAcc6" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Pregled podataka o studentovim studijima</button>
+        <div id="KontrolaOtvaranja6" class="panel show">
+            <br />
+            @foreach (var item in Model.Studiji)
+            {
+                <p><strong>Naziv studija: </strong>@item.nazivJednogOdStudija</p>
+                <p><strong>Tip indexa: </strong>@item.tipIndexa</p>
+                <p><strong>Studentska prava traju do: </strong>@item.doKadTrajuStudPrava</p>
+                <p><strong>Prosjek studenta: </strong>@item.prosjekStudenta</p>
+                <p><strong>Težinski prosjek studenta: </strong>@item.tezinskiProsjekStudenta</p>
+                <p><strong>Tip/razina studija: </strong>@item.razinaINazivStudija</p>
+                <p><strong>Redni broj studija: </strong>@item.redniBrojStudija</p>
+
+            }
+            
+        </div>
 
 
 
-<!--Accordion-->
-<script src="~/Accordion/accordion.js"></script>
-<!--Accordion-->
+        <button id="KontrolaOtvaranjaAcc7" class="accordion active" style="margin-bottom:1px; padding:8px; padding-left:15px">Pregled prelazaka s drugog studija</button>
+        <div id="KontrolaOtvaranja7" class="panel show">
+            <br />
+            @if (Model.prelazakIzUstanove != null)
+            {
+                <p><strong>Naziv: </strong>@Model.prelazakIzUstanove</p>
+                <p><strong>Datum upisa: </strong>@Model.prelazakDatumUpisa</p>
+                <p><strong>Datum rjesenja: </strong>@Model.prelazakDatumRjesenja</p>
+                <p><strong>Iskorišteno semestara na teret Ministarstva: </strong>@Model.prelazakIskoristenoSemestra</p>
+                @*<p><strong>Rješenje o prelasku: </strong></p>*@
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <strong>Ne postoji prelazak s drugog visokog učilišta za odabranog studenta.</strong>
+                </div>
+            }
+        </div>
+
+
+
+    }
+
+@*samo comment...zbog commit imena*@
+
+
+
+
+    <!--Accordion-->
+    <script src="~/Accordion/accordion.js"></script>
+    <!--Accordion-->

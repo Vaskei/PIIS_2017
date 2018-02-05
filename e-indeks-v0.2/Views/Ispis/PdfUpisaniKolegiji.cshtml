@@ -1,0 +1,113 @@
+@model SEUS.EXCELKlase.StudentInfo
+
+@{
+    ViewBag.Title = "Upisani Kolegiji";
+}
+
+<!--Accordion-->
+<link rel="stylesheet" href="~/Accordion/accordion.css" />
+<!--Accordion-->
+
+<h4>Unesi svoj jedinstveni maticni broj akademskog gradanina</h4>
+
+@using (Html.BeginForm("PdfUpisani", "Ispis", FormMethod.Get))
+{
+    <p>
+        JMBAG: @Html.TextBox("jmbag")
+        <button type="submit" class="btn btn-default">Unesite jmbag</button>
+    </p>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Greska kod upisa JMBAG-a!</strong>
+        <p>  @ViewBag.Error </p>
+    </div>
+}
+
+else if (ViewBag.Error == null && Model != null)
+{
+    <div id="element-to-print">
+        <table border="1">
+            <tr>
+                <th>Kolegij</th>
+                <th>Predavac</th>
+                <th>Polozeno (DA/NE)</th>
+                <th>Ocjena</th>
+            </tr>
+            @foreach (var studij in Model.Studiji)
+            {
+                <thead>Studij: @studij.Naziv</thead>
+                @foreach (var semestar in studij.Semestri)
+                {
+
+                    @foreach (var kol in semestar.Kolegiji)
+                    {
+
+                        @if (semestar.Oznaka == 1 || semestar.Oznaka == 2 || semestar.Oznaka == 3 || semestar.Oznaka == 4 || semestar.Oznaka == 5 || semestar.Oznaka == 6)
+                        {
+                            @if (kol.Profesor == null)
+                            {
+                                @if (kol.Polozen == true)
+                                {
+                                    <tr>
+                                        <td>@kol.Naziv</td>
+                                        <td>NEPOZNATO</td>
+                                        <td>DA</td>
+                                        <td>@kol.Ocjena</td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@kol.Naziv</td>
+                                        <td>NEPOZNATO</td>
+                                        <td>NE</td>
+                                        <td>predmet nije polozen!</td>
+                                    </tr>
+                                }
+                            }
+
+                            else
+                            {
+                                @if (kol.Polozen == true)
+                                {
+                                    <tr>
+                                        <td>@kol.Naziv</td>
+                                        <td>@kol.Profesor</td>
+                                        <td>DA</td>
+                                        <td>@kol.Ocjena</td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@kol.Naziv</td>
+                                        <td>@kol.Profesor
+                                        <td>
+                                        <td>NE</td>
+                                        <td>predmet nije polozen!</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        </table>
+        <br /> <br />
+    </div>
+    <button type="button" class="btn btn-success disabled">Upisani Kolegiji su uspjesno skinuti!</button>
+    <a class="btn btn-success" onclick="window.open('mailto:test@example.com');">  Posaljite na e-mail  </a>
+
+}
+
+<!--Accordion-->
+<script src="~/Accordion/dep/html2pdf.bundle.min.js"></script>
+<script src="~/Accordion/accordion.js"></script>
+<script src="~/Accordion/pdf.js"></script>
+<!--Accordion-->

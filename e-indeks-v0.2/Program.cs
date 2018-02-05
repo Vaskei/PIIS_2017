@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-// Sustav Elektroničkih Usluga za Studente (SEUS) --> ZEUS?
+// Sustav Elektroničkih Usluga za Studente (SEUS)
 namespace SEUS
 {
     public class Program
@@ -19,7 +19,6 @@ namespace SEUS
                 .UseStartup<Startup>()
                 //.UseApplicationInsights()
                 .Build();
-
             host.Run();
         }
     }

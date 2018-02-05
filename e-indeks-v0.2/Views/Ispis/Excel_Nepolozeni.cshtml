@@ -1,0 +1,35 @@
+
+@{
+    ViewData["Title"] = "Excel_Nepolozeni";
+}
+@*
+    to stavimo gore ukoliko ne zelimo da nam prikaze layout cijeli...
+    Layout  = null
+*@
+<h2>Nepolozeni kolegiji:</h2>
+<br /> <br />
+@*ovo je header nase tabele.. postavljamo neke atribute kao stosu border=1*@
+<table cellpadding="2" cellspacing="2" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Kolegij</th>
+        <th>Polozeni</th>
+        <th>Semestar</th>
+    </tr>
+    @*sljedeca foreach petlja sluzi za ispis svih napolozenih kolegija koji su upisani u excelnepolozenimodel.*@
+    @*podatke izvlacimo iz ViewBaga u kojeg smo upisali kod modela.*@
+    @foreach (var nepolozeni in ViewBag.listaNepolozenih)
+    {
+        <tr>
+            <td>@nepolozeni.ID</td>
+            <td>@nepolozeni.Kolegij</td>
+            <td>@nepolozeni.Polozeni_da_ne</td>
+            <td>@nepolozeni.Semestar</td>
+        </tr>
+
+    }
+</table>
+<br />
+@*ovaj gumb sluzi za direktno skidanje na korisnikovo racunalo*@
+<a class="btn btn-success" href="@Url.Action("PreuzetoNepolozeni", "Ispis")">preuzmite <b class="glyphicon glyphicon-download"></b></a>
+<a class="btn btn-success" onclick="window.open('mailto:test@example.com');">  Posaljite na e-mail  </a>

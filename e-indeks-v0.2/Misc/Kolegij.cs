@@ -12,6 +12,7 @@ namespace e_Index.Misc
         public int ECTS { get; set; }
         public string Ocjena { get; set; }
         public bool Polozen { get; set; }
+        public string datumIzlaska { get; set; }
     }
 
     public class Semestar
@@ -37,7 +38,7 @@ namespace e_Index.Misc
             this.Semestri = new List<Semestar>();
         }
     }
-
+    /*
     public class StudentInfo
     {
         public string Naziv { get; set; }
@@ -48,4 +49,42 @@ namespace e_Index.Misc
             this.Studiji = new List<Studij>();
         }
     }
+    */
+
+    public class StudentInfo
+    {
+        public string Naziv { get; set; }
+
+        public int ectsUkupno { get; set; }
+        public int ectsKolegij { get; set; }
+        public int kolegijOcjena { get; set; }
+
+        public int ECTSOsvojeno { get; set; }
+        public long ECTSOsvojenoB { get; set; }
+
+        public double TePr { get; set; }
+        public String TePrB { get; set; }
+
+        public int godina { get; set; }
+        public int id { get; set; }
+
+        public List<Studij> Studiji { get; set; }
+        public List<StudentInfo> SviStudenti { get; set; }
+
+        public StudentInfo()
+        {
+            this.SviStudenti = new List<StudentInfo>();
+            this.Studiji = new List<Studij>();
+        }
+    }
+    public class PregledRokova
+    {
+        public DateTime datumIzlaska { get; set; }
+        public List<PregledRokova> rokovi { get; set; }
+        public PregledRokova()
+        {
+            this.rokovi = new List<PregledRokova>();
+        }
+    }
+
 }

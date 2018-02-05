@@ -15,7 +15,7 @@ namespace SEUS.PregledOcjena.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Popis studenata koji su radili na ovome projektu";
 
             return View();
         }
@@ -26,6 +26,16 @@ namespace SEUS.PregledOcjena.Controllers
 
             return View();
         }
+
+ 
+
+        public IActionResult RangLista()
+        {
+            ViewData["Message"] = "Rang lista.";
+
+            return View();
+        }
+
 
         public IActionResult Error()
         {

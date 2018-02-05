@@ -6,8 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Infomacije\**" />
+    <Content Remove="Views\Infomacije\**" />
+    <EmbeddedResource Remove="Views\Infomacije\**" />
+    <None Remove="Views\Infomacije\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="wwwroot\Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
@@ -16,10 +29,17 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
+    <PackageReference Include="NETCore.MailKit" Version="1.1.1" />
+    <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Informacije\" />
+    <Folder Include="Views\BrojIzlazaka\" />
   </ItemGroup>
 
 </Project>
